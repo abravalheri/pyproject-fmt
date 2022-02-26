@@ -23,6 +23,12 @@ optional-dependencies.test = [
   "pytest-cov>=3",
   "pytest-mock>=3.7",
 ]
+optional-dependencies.docs = [
+  "furo",
+  "myst-parser[linkify]",
+  "sphinx-copybutton",
+  "sphinx",
+]
 scripts.pyproject-fmt = "pyproject_fmt.__main__:run"
 dynamic = ["version"]
 classifiers = [
