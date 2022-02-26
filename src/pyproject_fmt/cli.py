@@ -15,10 +15,10 @@ class PyProjectFmtNamespace(Namespace):
 
 
 def pyproject_toml_path_creator(argument: str) -> Path:
-    """Validate that tox.ini can be formatted.
+    """Validate that pyproject.toml can be formatted.
 
     :param argument: the string argument passed in
-    :return: the tox.ini path
+    :return: the pyproject.toml path
     """
     path = Path(argument).absolute()
     if not path.exists():
@@ -32,13 +32,9 @@ def pyproject_toml_path_creator(argument: str) -> Path:
     return path
 
 
-def cli_args(args: Sequence[str]) -> PyProjectFmtNamespace:
-    """
-    Load the tools options.
-
-    :param args: CLI arguments
-    :return: the parsed options
-    """
+def cli_parser() -> ArgumentParser:
+    """Construct a parser that can be used to extract CLI arguments."""
+    # Useful for sphinx-argparse-cli
     parser = ArgumentParser()
     parser.add_argument(
         "-s",
@@ -46,5 +42,16 @@ def cli_args(args: Sequence[str]) -> PyProjectFmtNamespace:
         action="store_true",
         help="print the formatted text to the stdout (instead of update in-place)",
     )
-    parser.add_argument("pyproject_toml", type=pyproject_toml_path_creator, help="tox ini file to format")
+    parser.add_argument("pyproject_toml", type=pyproject_toml_path_creator, help="pyprojec.toml file to format")
+    return parser
+
+
+def cli_args(args: Sequence[str]) -> PyProjectFmtNamespace:
+    """
+    Load the tools options.
+
+    :param args: CLI arguments
+    :return: the parsed options
+    """
+    parser = cli_parser()
     return parser.parse_args(namespace=PyProjectFmtNamespace(), args=args)

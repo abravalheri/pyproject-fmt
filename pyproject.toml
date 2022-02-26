@@ -26,8 +26,9 @@ optional-dependencies.test = [
 optional-dependencies.docs = [
   "furo",
   "myst-parser[linkify]",
-  "sphinx-copybutton",
   "sphinx",
+  "sphinx-argparse-cli",
+  "sphinx-copybutton",
 ]
 scripts.pyproject-fmt = "pyproject_fmt.__main__:run"
 dynamic = ["version"]
