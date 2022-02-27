@@ -14,4 +14,5 @@ CLI Reference <cli>
 :hidden:
 
 License <license>
+Code of Conduct <code_of_conduct>
 ```
