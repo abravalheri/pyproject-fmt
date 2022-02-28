@@ -39,20 +39,25 @@ def order_keys(
 ) -> None:
     body = table.value.body
     entries = {i.key: (i, v) for (i, v) in body if isinstance(i, Key)}
-    body.clear()
+    sorted_entries = []
 
     for pin in to_pin or []:  # push pinned to start
         if pin in entries:
-            body.append(entries[pin])
+            sorted_entries.append(entries[pin])
             del entries[pin]
     # append the rest
     if sort_key is None:
-        body.extend(entries.values())
+        sorted_entries.extend(entries.values())
     else:
-        body.extend(v for k, v in sorted(entries.items(), key=sort_key))
+        sorted_entries.extend(v for k, v in sorted(entries.items(), key=sort_key))
 
     if isinstance(table, Table):
-        body.append((None, Whitespace("\n")))  # add trailing newline to separate
+        sorted_entries.append((None, Whitespace("\n")))  # add trailing newline to separate
+
+    # Copy all elements from the normalised table into the existing one
+    table.clear()
+    for key, value in sorted_entries:
+        table.add(key, value)
 
 
 @dataclass
